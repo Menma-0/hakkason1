@@ -2,5 +2,12 @@
 </script>
 
 <template>
-    <h1>ここに画像いれるで</h1>
+    <p>ここに画像いれるで</p>
+    <ImageUpload />
 </template>
+
+<style>
+p{
+    top: 100px;   
+}
+</style>
