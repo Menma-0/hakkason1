@@ -64,7 +64,7 @@ const layout = {
 const captureAndSaveImage = async () => {
   const canvas = document.createElement('canvas');
   canvas.width = 390; // キャンバスの幅
-  canvas.height = 800; // キャンバスの高さ
+  canvas.height = 844; // キャンバスの高さ
 
   const context = canvas.getContext('2d');
   if (!context) return;
@@ -144,7 +144,7 @@ const saveImageToFile = async (blob: Blob, fileName: string): Promise<string> =>
     const data = await response.json();
 
     if (response.ok) {
-      alert(`画像が保存されました: ${data.path}`);
+      //alert(`画像が保存されました: ${data.path}`);
       return data.path; // 保存された画像のパスを返す
     } else {
       console.error('画像の保存に失敗しました:', data.error);
@@ -158,6 +158,10 @@ const saveImageToFile = async (blob: Blob, fileName: string): Promise<string> =>
 </script>
 
 <style scoped>
+h1 {
+  margin-top: 60px;
+}
+
 .container {
   margin-top: 50px;
   display: flex;
@@ -181,6 +185,7 @@ const saveImageToFile = async (blob: Blob, fileName: string): Promise<string> =>
 
 button {
   margin-top: 16px;
+  margin-bottom: 60px;
   padding: 8px 16px;
   font-size: 16px;
   cursor: pointer;
