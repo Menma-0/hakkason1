@@ -4,13 +4,14 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "formidable": "^3.5.1",
+    "html2canvas": "^1.4.1",
     "nuxt": "^3.12.4",
     "vite": "^5.3.5",
     "vue": "latest"
