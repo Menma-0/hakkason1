@@ -1,4 +1,13 @@
+<script setup>
+</script>
+
 <template>
-    <h1>index.vue</h1>
-    <InputText title="Name is"/>
+    <p>ここに画像いれるで</p>
+    <ImageUpload />
 </template>
+
+<style>
+p{
+    top: 100px;   
+}
+</style>
