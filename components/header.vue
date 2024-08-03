@@ -11,7 +11,7 @@
     height: 60px;
     background: #FFF;
     box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
-    position: fixed;
+    position: stickey;
     display: flex;
     align-items: center;
     top: 0;

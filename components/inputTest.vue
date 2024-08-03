@@ -57,10 +57,10 @@
     imageSrc.value = canvas.toDataURL('image/png');
   
     // 画像をダウンロードする場合
-    const link = document.createElement('a');
-    link.href = imageSrc.value;
-    link.download = 'captured_image.png';
-    link.click();
+    // const link = document.createElement('a');
+    // link.href = imageSrc.value;
+    // link.download = 'captured_image.png';
+    // link.click();
   };
   </script>
   
