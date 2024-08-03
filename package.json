@@ -12,6 +12,7 @@
   "dependencies": {
     "formidable": "^3.5.1",
     "nuxt": "^3.12.4",
+    "vite": "^5.3.5",
     "vue": "latest"
   }
 }
