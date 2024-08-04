@@ -1,193 +1,321 @@
 <template>
-  <div>
-    <h1>画像とテキストをキャプチャ</h1>
-
-    <!-- 画像のアップロード -->
-    <input type="file" accept="image/*" @change="onImageFileChange" />
-
-    <!-- テキスト入力フィールド -->
-    <div class="container">
-      <img
-        v-if="uploadedImageSrc"
-        :src="uploadedImageSrc"
-        alt="Input Image"
-        class="input-image"
-      />
-
-      <!-- テキスト入力フィールド -->
-      <input-text
-        v-for="(text, index) in textAreas"
-        :key="index"
-        :title="`テキスト ${index + 1}`"
-        v-model="textAreas[index]"
-      />
+    <div class="i-phone-13-14">
+      <div class="ファイル選択ボタン">ファイルを選択</div>
+      <div class="写真">プレビュー</div>
+      <div class="sidebar">名前・性格</div>
+      <div class="div">
+        <div class="div-2">
+            <div class="性格">
+                <div class="name">名前</div>
+                <div class="性格を入力">ここに入力</div>
+            </div>
+            <div class="性格">
+                <div class="name">性格</div>
+                <div class="性格を入力">性格を入力</div>
+          </div>
+        </div>
+      </div>
+      <div class="detail_all">
+        <div class="sidebar">出会った日、睡眠時間</div>
+        <div class="detail_sohubo">
+          <div class="detail_oya">
+            <div class="detail">出会った日</div>
+            <div class="detail">睡眠時間</div>
+            <div class="detail">出会った場所</div>
+          </div>
+          <div class="サブスキル-2">
+            <div class="detail_value">ここに入力</div>
+            <div class="detail_value">ここに入力</div>
+            <div class="detail_value">ここに入力</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar">愛を語って！</div>
+      <div class="自由に書いてください！-200-字以内">
+        自由に書いてください！(200字以内)
+      </div>
+      <div class="div-4">
+        <div class="sidebar">サブスキル</div>
+        <div class="サブスキル-4">
+          <div class="levels">
+            <div class="level">レベル10</div>
+            <div class="level">レベル25</div>
+            <div class="level">レベル50</div>
+            <div class="level">レベル75</div>
+            <div class="level">レベル100</div>
+          </div>
+          <div class="サブスキル-5">
+            <div class="サブスキル">サブスキル1</div>
+            <div class="サブスキル">サブスキル2</div>
+            <div class="サブスキル">サブスキル3</div>
+            <div class="サブスキル">サブスキル4</div>
+            <div class="サブスキル">サブスキル5</div>
+          </div>
+        </div>
+      </div>
+      <div class="画像を生成">画像を生成</div>
     </div>
-
-    <!-- 画像を生成 -->
-    <button @click="captureAndSaveImage">画像を生成</button>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import html2canvas from 'html2canvas';
-import { useRouter } from 'vue-router';
-
-// 入力された画像のURL
-const uploadedImageSrc = ref('');
-
-// テキストエリアの配列
-const textAreas = ref([
-  '','','','','',
-]); // 初期値として設定
-
-// ルーター
-const router = useRouter();
-
-// 画像ファイルが選択されたときの処理
-const onImageFileChange = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files[0]) {
-    const file = input.files[0];
-    uploadedImageSrc.value = URL.createObjectURL(file);
-  }
-};
-
-// 配置情報を定義（画像とテキストの配置を決める）
-const layout = {
-  image: { x: 20, y: 20, width: 300, height: 200 }, // 画像の配置
-  textStart: { x: 350, y: 40 }, // テキストの開始位置
-  lineHeight: 30, // 行間
-};
-
-// コンテンツをキャプチャして画像として保存
-const captureAndSaveImage = async () => {
-  const canvas = document.createElement('canvas');
-  canvas.width = 390; // キャンバスの幅
-  canvas.height = 844; // キャンバスの高さ
-
-  const context = canvas.getContext('2d');
-  if (!context) return;
-
-  // 背景色を白に設定
-  context.fillStyle = 'white';
-  context.fillRect(0, 0, canvas.width, canvas.height);
-
-  // 画像を描画
-  if (uploadedImageSrc.value) {
-    const img = new Image();
-    img.src = uploadedImageSrc.value;
-    await new Promise((resolve) => (img.onload = resolve)); // 画像がロードされるのを待つ
-    context.drawImage(
-      img,
-      layout.image.x,
-      layout.image.y,
-      layout.image.width,
-      layout.image.height
-    );
-  }
-
-  // テキストを描画
-  context.font = 'bold 24px Arial';
-  context.fillStyle = 'black';
-  textAreas.value.forEach((text, index) => {
-    const x = layout.textStart.x;
-    const y = layout.textStart.y + index * layout.lineHeight;
-    context.fillText(text, x, y);
-  });
-
-  // 画像データURLを取得
-  const imageSrc = canvas.toDataURL('image/png');
-
-  // Base64文字列からBlobを作成
-  const blob = dataURLToBlob(imageSrc);
-
-  // ファイル名を生成
-  const fileName = `captured_image_${Date.now()}.png`;
-
-  // ファイルをstaticディレクトリに保存
-  const filePath = await saveImageToFile(blob, fileName);
-
-  // セッションストレージにパスを保存
-  sessionStorage.setItem('imagePath', filePath);
-
-  // 次のページに遷移
-  router.push({ name: 'image' });
-};
-
-// Base64データURLをBlobに変換
-const dataURLToBlob = (dataURL: string): Blob => {
-  const byteString = atob(dataURL.split(',')[1]);
-  const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const uintArray = new Uint8Array(arrayBuffer);
-
-  for (let i = 0; i < byteString.length; i++) {
-    uintArray[i] = byteString.charCodeAt(i);
-  }
-
-  return new Blob([uintArray], { type: mimeString });
-};
-
-// Blobをstaticディレクトリに保存
-const saveImageToFile = async (blob: Blob, fileName: string): Promise<string> => {
-  const formData = new FormData();
-  formData.append('file', blob, fileName);
-
-  try {
-    // APIエンドポイントにファイルをPOST
-    const response = await fetch('/api/save-image', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      //alert(`画像が保存されました: ${data.path}`);
-      return data.path; // 保存された画像のパスを返す
-    } else {
-      console.error('画像の保存に失敗しました:', data.error);
-      return '';
+    </template>
+    
+    
+    
+    <style scoped>
+    .i-phone-13-14 {
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    max-width: 480px;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: Inter, sans-serif;
+    white-space: nowrap;
+    justify-content: center;
+    margin: 0 auto;
     }
-  } catch (error) {
-    console.error('画像の保存に失敗しました:', error);
-    return '';
-  }
-};
-</script>
-
-<style scoped>
-h1 {
-  margin-top: 60px;
-}
-
-.container {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid #ccc;
-  padding: 16px;
-  background-color: #f9f9f9;
-  width: 100%;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.input-image {
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #000;
-}
-
-button {
-  margin-top: 16px;
-  margin-bottom: 60px;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-}
-</style>
+    .ファイル選択ボタン {
+    align-self: center;
+    border-radius: 5px;
+    background-color: rgba(217, 217, 217, 1);
+    margin-top: 40px;
+    min-height: 55px;
+    width: 125px;
+    max-width: 100%;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    padding: 20px;
+    }
+    .写真 {
+    background-color: rgba(217, 246, 187, 1);
+    align-self: center;
+    margin-top: 40px;
+    width: 353px;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    padding: 220px 70px 176px;
+    text-align: center;
+    }
+    .名前・性格 {
+    background-color: rgba(103, 217, 119, 1);
+    margin-top: 40px;
+    width: 100%;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    padding: 2px 10px;
+    }
+    .div {
+    align-self: center;
+    display: flex;
+    margin-top: 40px;
+    width: 342px;
+    max-width: 100%;
+    align-items: center;
+    gap: 20px 22px;
+    justify-content: start;
+    }
+    .div-2 {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    min-width: 240px;
+    width: 342px;
+    align-items: start;
+    gap: 15px 22px;
+    justify-content: start;
+    margin: auto 0;
+    }
+    .name {
+    align-self: stretch;
+    border-radius: 6px;
+    background-color: rgba(107, 234, 75, 1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    height: 30px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 700;
+    width: 50px;
+    padding: 3px 10px;
+    }
+    .ここに入力 {
+    align-self: stretch;
+    min-height: 30px;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    padding: 8px 35px;
+    }
+    .性格 {
+    display: flex;
+    min-width: 240px;
+    align-items: center;
+    gap: 20px 22px;
+    justify-content: start;
+    }
+    .性格を入力 {
+    align-self: stretch;
+    min-height: 30px;
+    gap: 10px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    width: 240px;
+    margin: auto 0;
+    }
+    .detail_all {
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: start;
+    }
+    .sidebar {
+    align-self: stretch;
+    background-color: rgba(103, 217, 119, 1);
+    min-height: 22px;
+    width: 100%;
+    gap: 10px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    padding: 0 10px;
+    }
+    .detail_sohubo {
+    align-self: center;
+    display: flex;
+    margin: 12px 0 30px 0;
+    align-items: center;
+    gap: 20px 24px;
+    font-size: 12px;
+    justify-content: start;
+    }
+    .detail_oya {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    justify-content: start;
+    margin: auto 0;
+    }
+    .detail {
+    align-self: stretch;
+    border-radius: 6px;
+    background-color: rgba(107, 234, 75, 1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    height: 20px;
+    width: 80px;
+    gap: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    margin-top: 10px;
+    }
+    .detail_value {
+    align-self: stretch;
+    background-color: rgba(255, 255, 255, 1);
+    margin-top: 10px;
+    min-height: 20px;
+    max-width: 360px;
+    width: 180px;
+    gap: 10px;
+    padding: 3px 35px;
+    }
+    .愛を語って！ {
+    align-self: stretch;
+    background-color: rgba(103, 217, 119, 1);
+    margin-top: 40px;
+    min-height: 22px;
+    width: 100%;
+    gap: 10px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 400;
+    padding: 0 10px;
+    }
+    .自由に書いてください！-200-字以内 {
+    align-self: center;
+    margin-top: 40px;
+    min-height: 121px;
+    width: 320px;
+    max-width: 100%;
+    gap: 10px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    }
+    .div-4 {
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: start;
+    }
+    .サブスキル{
+    align-self: stretch;
+    background-color: rgba(255, 255, 255, 1);
+    margin-top: 10px;
+    min-height: 20px;
+    max-width: 100%;
+    width: 240px;
+    gap: 10px;
+    padding: 3px 35px;
+    }
+    .level {
+    align-self: stretch;
+    border-radius: 6px;
+    background-color: rgba(107, 234, 75, 1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    margin-top: 10px;
+    min-height: 20px;
+    width: 80px;
+    gap: 10px;
+    padding: 3px 14px;
+    }
+    
+    .サブスキル-5 {
+    align-self: stretch;
+    background-color: rgba(255, 255, 255, 1);
+    min-height: 20px;
+    max-width: 100%;
+    width: 240px;
+    gap: 10px;
+    padding: 3px 35px;
+    }
+    .画像を生成 {
+    align-self: center;
+    border-radius: 6px;
+    background-color: rgba(103, 217, 119, 1);
+    margin-top: 40px;
+    min-height: 60px;
+    width: 200px;
+    max-width: 100%;
+    gap: 10px;
+    font-size: 36px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    padding: 8px 10px;
+    }
+    .levels {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        color: rgba(255, 255, 255, 1);
+        font-weight: 700;
+        justify-content: start;
+        width: 108px;
+    }
+    .サブスキル-4 {
+        align-self: stretch;
+        background-color: rgba(255, 255, 255, 1);
+        margin-top: 10px;
+        min-height: 20px;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    </style>

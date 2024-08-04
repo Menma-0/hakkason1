@@ -1,25 +1,16 @@
 <template>
-    <div class="header">
-        <h1 >マイポケ</h1>
-    </div>
+    <div class="header">マイポケ</div>
 </template>
 
 <style scoped>
-.header{
-    margin: 0;
-    width: 100%;
-    height: 60px;
-    background: #FFF;
-    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
-    position: fixed;
-    display: flex;
-    align-items: center;
-    top: 0;
-    left: 0;
-}
-.header h1{
-    position: relative;
-    left: 10px;
-    margin: 0;
-}
+.header {
+    align-self: stretch;
+    background-color: rgba(124, 254, 113, 1);
+    min-height: 96px;
+    gap: 10px;
+    font-size: 30px;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    padding: 0 20px;
+    }
 </style>
