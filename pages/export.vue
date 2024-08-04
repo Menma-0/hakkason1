@@ -1,7 +1,7 @@
 <template>
     <div class="i-phone-13-14-1">
       <div class="profile">
-        <div class="picture"></div>
+        <div class="picture"><img src="../assets/IMG_5463.png" width="120" height="194"></div>
         <div class="data">
           <div class="name">フシギバナ</div>
           <div class="character">
@@ -33,7 +33,7 @@
         <div class="subskill-small">最大所持数S</div>
       </div>
       <div class="home-btn">
-        <v-btn to="index" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
+        <v-btn to="/" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
             ホームに戻る
         </v-btn>
 
