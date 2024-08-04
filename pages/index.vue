@@ -1,3 +1,9 @@
+<script setup>
+    const characterlist=ref(['さみしがり(おてスピ↑げんき↓)', 'いじっぱり(おてスピ↑食材↓)', 'やんちゃ(おてスピ↑スキル↓)','ゆうかん(おてスピ↑EXP↓)','ずぶとい(げんき↑おてスピ↓)','わんぱく(げんき↑食材↓)','のうてんき(げんき↑スキル↓)','のんき(げんき↑EXP↓)','ひかえめ(食材↑おてスピ↓)','おっとり(食材↑げんき↓)','うっかりや(食材↑スキル↓)','れいせい(食材↑EXP↓)','おだやか(スキル↑おてスピ↓)','おとなしい(スキル↑げんき↓)','しんちょう(スキル↑食材↓)','なまいき(スキル↑EXP↓)','おくびょう(EXP↑おてスピ↓)','せっかち(EXP↑げんき↓)','ようき(EXP↑食材↓)','むじゃき(EXP↑スキル↓)','てれや(無補正)','がんばりや(無補正)','すなお(無補正)','きまぐれ(無補正)','まじめ(無補正)']);
+    const character=ref("");
+    const name=ref("");
+</script>
+
 <template>
     <div class="i-phone-13-14">
       <ImageUpload/>
@@ -7,11 +13,15 @@
         <div class="div-2">
             <div class="性格">
                 <div class="name">名前</div>
-                <div class="性格を入力">ここに入力</div>
+                <div class="性格を入力"><v-text-field
+                    label="名前を入力しよう！"
+                    v-model="name"
+                  ></v-text-field>
+                </div>
             </div>
             <div class="性格">
                 <div class="name">性格</div>
-                <div class="性格を入力">性格を入力</div>
+                <div class="性格を入力"><v-select v-model="character" :items="characterlist" label="選択してください"></v-select></div>
           </div>
         </div>
       </div>
@@ -272,9 +282,9 @@
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     margin-top: 10px;
     min-height: 20px;
-    width: 80px;
     gap: 10px;
     padding: 3px 14px;
+    text-align: center;
     }
     
     .サブスキル-5 {
@@ -306,8 +316,10 @@
         flex-direction: column;
         color: rgba(255, 255, 255, 1);
         font-weight: 700;
-        justify-content: start;
+        justify-content: center;
+        align-items: center;
         width: 108px;
+        margin-left: 15px;
     }
     .サブスキル-4 {
         align-self: stretch;
