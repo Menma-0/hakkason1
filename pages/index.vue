@@ -1,7 +1,19 @@
 <script setup>
-    const characterlist=ref(['さみしがり(おてスピ↑げんき↓)', 'いじっぱり(おてスピ↑食材↓)', 'やんちゃ(おてスピ↑スキル↓)','ゆうかん(おてスピ↑EXP↓)','ずぶとい(げんき↑おてスピ↓)','わんぱく(げんき↑食材↓)','のうてんき(げんき↑スキル↓)','のんき(げんき↑EXP↓)','ひかえめ(食材↑おてスピ↓)','おっとり(食材↑げんき↓)','うっかりや(食材↑スキル↓)','れいせい(食材↑EXP↓)','おだやか(スキル↑おてスピ↓)','おとなしい(スキル↑げんき↓)','しんちょう(スキル↑食材↓)','なまいき(スキル↑EXP↓)','おくびょう(EXP↑おてスピ↓)','せっかち(EXP↑げんき↓)','ようき(EXP↑食材↓)','むじゃき(EXP↑スキル↓)','てれや(無補正)','がんばりや(無補正)','すなお(無補正)','きまぐれ(無補正)','まじめ(無補正)']);
+    const characterList=ref(['さみしがり(おてスピ↑げんき↓)', 'いじっぱり(おてスピ↑食材↓)', 'やんちゃ(おてスピ↑スキル↓)','ゆうかん(おてスピ↑EXP↓)','ずぶとい(げんき↑おてスピ↓)','わんぱく(げんき↑食材↓)','のうてんき(げんき↑スキル↓)','のんき(げんき↑EXP↓)','ひかえめ(食材↑おてスピ↓)','おっとり(食材↑げんき↓)','うっかりや(食材↑スキル↓)','れいせい(食材↑EXP↓)','おだやか(スキル↑おてスピ↓)','おとなしい(スキル↑げんき↓)','しんちょう(スキル↑食材↓)','なまいき(スキル↑EXP↓)','おくびょう(EXP↑おてスピ↓)','せっかち(EXP↑げんき↓)','ようき(EXP↑食材↓)','むじゃき(EXP↑スキル↓)','てれや(無補正)','がんばりや(無補正)','すなお(無補正)','きまぐれ(無補正)','まじめ(無補正)']);
     const character=ref("");
     const name=ref("");
+    const a=new Date();
+    const date=ref(a);
+    const time=ref("時間");
+    const fieldList=ref(['ワカクサ本島','シアンの砂浜','トープ洞窟','カンムリ雪原','ラピスラズリ湖畔']);
+    const field=ref("");
+    const love=ref("");
+    const subskillList=ref(['元気回復ボーナス','ゆめのかけらボーナス','リサーチEXPボーナス','睡眠EXPボーナス','おてつだいボーナス','きのみの数S','スキルレベルアップM','スキル確率アップM','食材確率アップM','スキルレベルアップS','最大所持数アップL','最大所持数M','おてつだいスピードM','スキル確率アップS','食材確率アップS','最大所持数アップS','お手伝いスピードS']);
+    const subskill1=ref("");
+    const subskill2=ref("");
+    const subskill3=ref("");
+    const subskill4=ref("");
+    const subskill5=ref("");
 </script>
 
 <template>
@@ -12,16 +24,17 @@
       <div class="div">
         <div class="div-2">
             <div class="性格">
-                <div class="name">名前</div>
-                <div class="性格を入力"><v-text-field
+                <div class="name name1">名前</div>
+                <div class="性格を入力">
+                    <v-text-field
                     label="名前を入力しよう！"
                     v-model="name"
                   ></v-text-field>
                 </div>
             </div>
             <div class="性格">
-                <div class="name">性格</div>
-                <div class="性格を入力"><v-select v-model="character" :items="characterlist" label="選択してください"></v-select></div>
+                <div class="name name1">性格</div>
+                <div class="性格を入力"><v-select v-model="character" :items="characterList" label="選択してください"></v-select></div>
           </div>
         </div>
       </div>
@@ -29,41 +42,51 @@
         <div class="sidebar">出会った日、睡眠時間</div>
         <div class="detail_sohubo">
           <div class="detail_oya">
-            <div class="detail">出会った日</div>
+            <div class="detail1">出会った日</div>
             <div class="detail">睡眠時間</div>
             <div class="detail">出会った場所</div>
           </div>
-          <div class="サブスキル-2">
-            <div class="detail_value">ここに入力</div>
-            <div class="detail_value">ここに入力</div>
-            <div class="detail_value">ここに入力</div>
+          <div class="detail_frame">
+            <div class="detail_value"><v-text-field style="width: 200px;" type="date" v-model="date"></v-text-field></div>
+            <div class="detail_value"><v-text-field style="width: 200px;" v-model="time"  ></v-text-field></div>
+            <div class="detail_value"><v-select style="width: 200px;" v-model="field" :items="fieldList" label="選択してください"></v-select></div>
           </div>
         </div>
       </div>
       <div class="sidebar">愛を語って！</div>
       <div class="自由に書いてください！-200-字以内">
-        自由に書いてください！(200字以内)
+        <v-textarea
+        label="相棒との思い出を語ろう！"
+        v-model="love"
+        rows="5"
+        outlined
+      ></v-textarea>
       </div>
       <div class="div-4">
         <div class="sidebar">サブスキル</div>
         <div class="サブスキル-4">
           <div class="levels">
-            <div class="level">レベル10</div>
+            <div class="level1">レベル10</div>
             <div class="level">レベル25</div>
             <div class="level">レベル50</div>
             <div class="level">レベル75</div>
             <div class="level">レベル100</div>
           </div>
           <div class="サブスキル-5">
-            <div class="サブスキル">サブスキル1</div>
-            <div class="サブスキル">サブスキル2</div>
-            <div class="サブスキル">サブスキル3</div>
-            <div class="サブスキル">サブスキル4</div>
-            <div class="サブスキル">サブスキル5</div>
+            <div class="サブスキル"><v-select  style="height:50px;" v-model="subskill1" :items="subskillList" label="Lv.10サブスキルを入力" ></v-select></div>
+            <div class="サブスキル"><v-select style="height:50px;" v-model="subskill2" :items="subskillList" label="Lv.25サブスキルを入力" ></v-select></div>
+            <div class="サブスキル"><v-select style="height:50px;" v-model="subskill3" :items="subskillList" label="Lv.50サブスキルを入力" ></v-select></div>
+            <div class="サブスキル"><v-select style="height:50px;" v-model="subskill4" :items="subskillList" label="Lv.75サブスキルを入力" ></v-select></div>
+            <div class="サブスキル"><v-select style="height:50px;" v-model="subskill5" :items="subskillList" label="Lv.100サブスキルを入力" ></v-select></div>
           </div>
         </div>
       </div>
-      <div class="画像を生成">画像を生成</div>
+      <v-divider thickness="3px" width="100%" class="mt-12"></v-divider>
+      <div class="画像を生成">
+        <v-btn to="export" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
+            作成
+        </v-btn>
+      </div>
     </div>
     </template>
     
@@ -203,6 +226,7 @@
     gap: 20px 24px;
     font-size: 12px;
     justify-content: start;
+    width: 100%;
     }
     .detail_oya {
     align-self: stretch;
@@ -210,7 +234,11 @@
     flex-direction: column;
     font-weight: 700;
     justify-content: start;
-    margin: auto 0;
+    position: relative;
+    left: 20px;
+    justify-content: space-between;
+    margin-top: 30px;
+    height: 210px;
     }
     .detail {
     align-self: stretch;
@@ -218,13 +246,25 @@
     background-color: rgba(107, 234, 75, 1);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     color: #FFFFFF;
-    height: 20px;
-    width: 80px;
     gap: 10px;
     font-weight: 600;
     padding: 3px 10px;
     margin-top: 10px;
+    padding: 6px 10px;
+    text-align: center;
     }
+    .detail1 {
+        align-self: stretch;
+        border-radius: 6px;
+        background-color: rgba(107, 234, 75, 1);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+        color: #FFFFFF;
+        gap: 10px;
+        font-weight: 600;
+        padding: 3px 10px;
+        padding: 6px 10px;
+        text-align: center;
+        }
     .detail_value {
     align-self: stretch;
     background-color: rgba(255, 255, 255, 1);
@@ -273,7 +313,6 @@
     max-width: 100%;
     width: 240px;
     gap: 10px;
-    padding: 3px 35px;
     }
     .level {
     align-self: stretch;
@@ -286,20 +325,30 @@
     padding: 3px 14px;
     text-align: center;
     }
+    .level1{
+        align-self: stretch;
+        border-radius: 6px;
+        background-color: rgba(107, 234, 75, 1);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+        min-height: 20px;
+        gap: 10px;
+        padding: 3px 14px;
+        text-align: center;
+        }
     
     .サブスキル-5 {
     align-self: stretch;
     background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
     min-height: 20px;
     max-width: 100%;
     width: 240px;
     gap: 10px;
-    padding: 3px 35px;
+    margin-left: 20px;
     }
     .画像を生成 {
     align-self: center;
-    border-radius: 6px;
-    background-color: rgba(103, 217, 119, 1);
     margin-top: 40px;
     min-height: 60px;
     width: 200px;
@@ -320,6 +369,9 @@
         align-items: center;
         width: 108px;
         margin-left: 15px;
+        justify-content: space-between;
+        margin-top: 25px;
+        height: 310px;
     }
     .サブスキル-4 {
         align-self: stretch;
@@ -329,5 +381,18 @@
         max-width: 100%;
         display: flex;
         flex-direction: row;
+    }
+    .detail_flame{
+        position: relative;
+        left: 120px;
+        height: 310px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width:270px;
+    }
+    .name1{
+        position: relative;
+        top: 15px;
     }
     </style>

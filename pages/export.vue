@@ -26,13 +26,18 @@
         ６月に出会った子です！毎日トマトを山ほど持ってきます！ポケモンスリープで2体目に捕まえた相棒です！
       </div>
       <div class="subskill">
-        <div class="subskill-1">スキルレベルアップM</div>
-        <div class="subskill-2">お手伝いスピードM</div>
-        <div class="subskill-3">最大所持数L</div>
-        <div class="subskill-4">スキル確率アップM</div>
-        <div class="subskill-5">最大所持数S</div>
+        <div class="subskill-small">スキルレベルアップM</div>
+        <div class="subskill-small">お手伝いスピードM</div>
+        <div class="subskill-small">最大所持数L</div>
+        <div class="subskill-small">スキル確率アップM</div>
+        <div class="subskill-small">最大所持数S</div>
       </div>
-      <div class="home-btn">🏠ホームへ戻る</div>
+      <div class="home-btn">
+        <v-btn to="index" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
+            ホームに戻る
+        </v-btn>
+
+      </div>
     </div>
 </template>
     <style scoped>
@@ -165,28 +170,15 @@
     justify-content: start;
     flex-wrap: wrap;
     }
-    .subskill-1 {
+    .subskill-small {
+        padding:3px 5px ;
     border-radius: 3px;
     width: 160px;
-    }
-    .subskill-2 {
-    border-radius: 3px;
-    width: 160px;
-    }
-    .subskill-3 {
-    border-radius: 3px;
-    width: 160px;
-    }
-    .subskill-4 {
-    border-radius: 3px;
-    width: 160px;
-    }
-    .subskill-5 {
-    border-radius: 3px;
-    width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #727171;
     }
     .home-btn {
-    align-self: stretch;
+    align-self: center;
     border-radius: 8px;
     margin-top: 30px;
     min-height: 40px;
