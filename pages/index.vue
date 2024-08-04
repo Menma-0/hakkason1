@@ -1,7 +1,7 @@
 <template>
     <div class="i-phone-13-14">
-      <div class="ファイル選択ボタン">ファイルを選択</div>
-      <div class="写真">プレビュー</div>
+      <ImageUpload/>
+
       <div class="sidebar">名前・性格</div>
       <div class="div">
         <div class="div-2">
