@@ -5,7 +5,7 @@
   <style scoped>
   .footer {
     background-color: rgba(237, 128, 95, 1);
-    margin-top: 132px;
+    margin-top: 100px;
     min-height: 96px;
     font-size: 48px;
     color: rgba(0, 0, 0, 1);
