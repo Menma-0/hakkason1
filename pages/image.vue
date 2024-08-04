@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>生成された画像の表示</h1>
-    <img :src="imagePath" alt="Generated Image" v-if="imagePath" />
+    <img class="picture" :src="imagePath" alt="Generated Image" v-if="imagePath" />
     <button @click="goBack">戻る</button>
   </div>
 </template>
@@ -36,9 +36,12 @@ h1 {
 }
 
 img {
-  max-width: 100%;
+  max-width: 10%;
   height: auto;
   margin-top: 16px;
+  width: 15px;
+  height: 30px;
+  object-fit: cover;
   border: 1px solid #000;
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="i-phone-13-14-1">
       <div class="profile">
-        <div class="picture"></div>
+        <img class="picture" :src="imageSrc" alt="Uploaded Image" />
         <div class="data">
           <div class="name">フシギバナ</div>
           <div class="character">
@@ -33,13 +33,32 @@
         <div class="subskill-small">最大所持数S</div>
       </div>
       <div class="home-btn">
-        <v-btn to="index" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
+        <v-btn to="/" color="rgba(103, 217, 119, 1)" width="200px" height="60px" style="font-size: 20px;">
             ホームに戻る
         </v-btn>
 
       </div>
     </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const imageSrc = ref('');
+
+// クライアントサイドでのみsessionStorageからデータを取得
+onMounted(() => {
+  if (process.client) {
+    const storedImage = sessionStorage.getItem('uploadedImage');
+    if (storedImage) {
+      imageSrc.value = storedImage;
+    } else {
+      console.warn('画像データが見つかりません');
+    }
+  }
+});
+</script>
+
     <style scoped>
     .i-phone-13-14-1 {
     background-color: rgba(255, 255, 255, 1);
@@ -78,8 +97,8 @@
     .picture {
     background-color: rgba(0, 0, 0, 0.38);
     display: flex;
-    width: 120px;
-    height: 194px;
+    width: 117px;
+    height: 252px;
     margin: auto 0;
     }
     .data {
@@ -197,4 +216,5 @@
     white-space: nowrap;
     padding: 19px 114px;
     }
+
     </style>

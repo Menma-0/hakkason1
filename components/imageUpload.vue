@@ -15,22 +15,29 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      uploadedImageSrc: null, // アップロードされた画像のURLを保持
+<script setup>
+import { ref } from 'vue';
+
+const uploadedImageSrc = ref(null);
+
+// ファイル選択時の処理
+const onFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      uploadedImageSrc.value = reader.result; // Base64形式の画像データ
+      saveImageToSessionStorage(reader.result);
     };
-  },
-  methods: {
-    // ファイルが選択されたときの処理
-    onFileChange(e) {
-      const file = e.target.files[0];
-      if (file) {
-        this.uploadedImageSrc = URL.createObjectURL(file); // 選択した画像のプレビュー用URLを作成
-      }
-    },
-  },
+    reader.readAsDataURL(file);
+  }
+};
+
+// 画像をsessionStorageに保存
+const saveImageToSessionStorage = (dataUrl) => {
+  if (process.client) {
+    sessionStorage.setItem('uploadedImage', dataUrl);
+  }
 };
 </script>
 
